@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBT Informatika Kelas IX - SMP Negeri 2 Ngadirejo</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+            user-select: none; /* Mencegah copy-paste soal secara mudah */
+        }
+
+        /* Custom scrollbar untuk navigasi soal */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Styling khusus untuk cetak (Print) */
+        @media print {
+            body {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                user-select: auto;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-only {
+                display: block !important;
+            }
+            .print-container {
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+                width: 100% !important;
+            }
+            .page-break {
+                page-break-before: always;
+            }
+            .avoid-break {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- ================= HEADER UTAMA (TOPBAR) ================= -->
+    <header class="bg-blue-900 text-white shadow-md sticky top-0 z-40 no-print">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center gap-2">
+            <div class="flex items-center gap-3 text-center md:text-left">
+                <div class="bg-white text-blue-900 p-2 rounded-lg font-extrabold text-xl shadow-inner hidden sm:flex items-center justify-center w-11 h-11">
+                    IT
+                </div>
+                <div>
+                    <h1 class="font-bold text-base sm:text-lg tracking-wide leading-tight">SMP NEGERI 2 NGADIREJO</h1>
+                    <p class="text-xs sm:text-sm text-blue-200">CBT Informatika Kelas IX • Materi: Jaringan Komputer & Internet</p>
+                </div>
+            </div>
+
+            <!-- Jam Real-Time WIB -->
+            <div class="flex items-center gap-3 bg-blue-950/70 px-4 py-1.5 rounded-lg border border-blue-700/50">
+                <svg class="w-4 h-4 text-emerald-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div class="text-right">
+                    <div id="realtime-clock" class="text-xs sm:text-sm font-mono font-semibold text-white">Memuat waktu...</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= HALAMAN 1: LOGIN & IDENTITAS PESERTA ================= -->
+    <main id="screen-login" class="flex-grow flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-xl border border-slate-200 max-w-2xl w-full overflow-hidden">
+            <!-- Banner Identitas Ujian -->
+            <div class="bg-gradient-to-r from-blue-800 to-indigo-900 p-6 text-white">
+                <span class="inline-block bg-amber-400 text-slate-900 text-xs font-bold px-2.5 py-1 rounded-md mb-2 uppercase tracking-wider">
+                    Asesmen Sumatif • Kurikulum Merdeka Fase D
+                </span>
+                <h2 class="text-2xl font-bold mb-1">Jaringan Komputer dan Internet</h2>
+                <p class="text-blue-200 text-sm">Evaluasi Berbasis HOTS (Higher Order Thinking Skills)</p>
+            </div>
+
+            <!-- Grid Informasi Ujian -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 bg-slate-50 border-b border-slate-200 text-center">
+                <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-xs text-slate-500">Jumlah Soal</div>
+                    <div class="font-bold text-slate-800 text-base">30 Butir <span class="text-xs font-normal text-slate-400">(Acak)</span></div>
+                </div>
+                <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-xs text-slate-500">Alokasi Waktu</div>
+                    <div class="font-bold text-slate-800 text-base">60 Menit</div>
+                </div>
+                <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-xs text-slate-500">KKTP</div>
+                    <div class="font-bold text-emerald-600 text-base">80</div>
+                </div>
+                <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-xs text-slate-500">Guru Mapel</div>
+                    <div class="font-bold text-slate-800 text-xs mt-1">Budi Winarno, S.Kom.</div>
+                </div>
+            </div>
+
+            <!-- Form Input Siswa -->
+            <form id="form-login" class="p-6 space-y-4">
+                <div id="login-alert" class="hidden bg-red-50 border-l-4 border-red-500 text-red-700 p-3 rounded text-sm">
+                    Mohon lengkapi semua data identitas peserta didik sebelum memulai ujian.
+                </div>
+
+                <div>
+                    <label for="input-nama" class="block text-sm font-semibold text-slate-700 mb-1">Nama Lengkap Siswa <span class="text-red-500">*</span></label>
+                    <input type="text" id="input-nama" placeholder="Contoh: Ahmad Fauzi Pratama" required
+                        class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition uppercase">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="input-kelas" class="block text-sm font-semibold text-slate-700 mb-1">Kelas <span class="text-red-500">*</span></label>
+                        <select id="input-kelas" required
+                            class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none bg-white transition">
+                            <option value="">-- Pilih Kelas --</option>
+                            <option value="IX A">IX A</option>
+                            <option value="IX B">IX B</option>
+                            <option value="IX C">IX C</option>
+                            <option value="IX D">IX D</option>
+                            <option value="IX E">IX E</option>
+                            <option value="IX F">IX F</option>
+                            <option value="IX G">IX G</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="input-absen" class="block text-sm font-semibold text-slate-700 mb-1">Nomor Absen <span class="text-red-500">*</span></label>
+                        <input type="number" id="input-absen" min="1" max="45" placeholder="Contoh: 12" required
+                            class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none transition">
+                    </div>
+                </div>
+
+                <!-- Petunjuk Singkat -->
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-xs sm:text-sm text-blue-900 space-y-1.5">
+                    <div class="font-bold flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Petunjuk Pengerjaan:
+                    </div>
+                    <ul class="list-disc list-inside space-y-1 text-blue-800">
+                        <li>Sistem akan memilih <strong>30 soal HOTS secara acak</strong> dari bank 40 soal beserta pengacakan opsi jawaban.</li>
+                        <li>Waktu pengerjaan adalah <strong>60 menit</strong>. Ujian otomatis berakhir jika waktu habis.</li>
+                        <li>Gunakan tombol <strong>Ragu-Ragu</strong> jika ingin meninjau ulang jawaban sebelum mengumpulkan.</li>
+                        <li>Setelah selesai, Anda dapat langsung mencetak bukti hasil evaluasi (KKTP: 80).</li>
+                    </ul>
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-blue-700 hover:bg-blue-800 active:bg-blue-900 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-blue-700/30 transition flex items-center justify-center gap-2 text-base">
+                    <span>MULAI UJIAN SEKARANG</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <!-- ================= HALAMAN 2: RUANG UJIAN CBT ================= -->
+    <main id="screen-exam" class="hidden flex-grow max-w-7xl w-full mx-auto p-4 flex flex-col lg:flex-row gap-6">
+        
+        <!-- Kolom Kiri: Area Soal & Navigasi Bawah -->
+        <div class="flex-grow flex flex-col bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden">
+            <!-- Sub-header Informasi Peserta & Timer -->
+            <div class="bg-slate-50 border-b border-slate-200 px-5 py-3 flex flex-wrap justify-between items-center gap-3">
+                <div class="flex items-center gap-3">
+                    <span class="bg-blue-700 text-white font-bold px-3.5 py-1.5 rounded-lg text-sm">
+                        Soal No. <span id="current-q-number">1</span> / 30
+                    </span>
+                    <span id="current-q-topic" class="hidden sm:inline-block bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-1 rounded-md">
+                        Analisis Jaringan
+                    </span>
+                </div>
+
+                <!-- Timer Hitung Mundur -->
+                <div id="timer-box" class="flex items-center gap-2 bg-slate-900 text-white px-4 py-1.5 rounded-xl font-mono font-bold text-base shadow-sm">
+                    <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span class="text-xs font-sans font-normal text-slate-300">Sisa Waktu:</span>
+                    <span id="countdown-display">60:00</span>
+                </div>
+            </div>
+
+            <!-- Konten Soal -->
+            <div class="p-5 sm:p-7 flex-grow overflow-y-auto">
+                <!-- Stimulus / Teks Soal -->
+                <div id="question-text" class="text-slate-800 text-base sm:text-lg leading-relaxed mb-6 font-medium">
+                    <!-- Diisi via JS -->
+                </div>
+
+                <!-- Pilihan Jawaban A, B, C, D -->
+                <div id="options-container" class="space-y-3">
+                    <!-- Diisi via JS -->
+                </div>
+            </div>
+
+            <!-- Footer Tombol Navigasi Soal -->
+            <div class="bg-slate-50 border-t border-slate-200 p-4 flex flex-wrap justify-between items-center gap-3">
+                <button id="btn-prev" onclick="prevQuestion()"
+                    class="px-4 py-2.5 rounded-xl font-semibold text-sm bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1.5 transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    <span>Sebelumnya</span>
+                </button>
+
+                <button id="btn-doubt" onclick="toggleDoubt()"
+                    class="px-4 py-2.5 rounded-xl font-semibold text-sm bg-amber-100 border border-amber-300 text-amber-800 hover:bg-amber-200 flex items-center gap-1.5 transition">
+                    <input type="checkbox" id="checkbox-doubt" class="w-4 h-4 accent-amber-600 pointer-events-none">
+                    <span>Ragu-Ragu</span>
+                </button>
+
+                <button id="btn-next" onclick="nextQuestion()"
+                    class="px-5 py-2.5 rounded-xl font-semibold text-sm bg-blue-700 hover:bg-blue-800 text-white flex items-center gap-1.5 shadow-sm transition">
+                    <span>Berikutnya</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Kolom Kanan: Panel Navigasi Nomor & Identitas -->
+        <aside class="w-full lg:w-80 flex-shrink-0 flex flex-col gap-4">
+            <!-- Kartu Identitas Peserta -->
+            <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-4">
+                <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Peserta Ujian</div>
+                <div id="exam-student-name" class="font-bold text-slate-800 text-base truncate">-</div>
+                <div class="text-sm text-slate-600 mt-0.5">
+                    Kelas: <span id="exam-student-class" class="font-semibold text-slate-800">-</span> • 
+                    Absen: <span id="exam-student-absen" class="font-semibold text-slate-800">-</span>
+                </div>
+                <div class="mt-3 pt-3 border-t border-slate-100 flex justify-between text-xs text-slate-500">
+                    <span>Terjawab: <strong id="count-answered" class="text-emerald-600">0</strong>/30</span>
+                    <span>Ragu: <strong id="count-doubt" class="text-amber-600">0</strong></span>
+                </div>
+            </div>
+
+            <!-- Panel Grid Nomor Soal 1 - 30 -->
+            <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-4 flex-grow flex flex-col">
+                <div class="text-sm font-bold text-slate-700 mb-3 flex items-center justify-between">
+                    <span>Navigasi Nomor Soal</span>
+                </div>
+
+                <!-- Grid Tombol Nomor -->
+                <div id="nav-grid" class="grid grid-cols-5 sm:grid-cols-6 lg:grid-cols-5 gap-2 mb-4">
+                    <!-- Diisi via JS -->
+                </div>
+
+                <!-- Legenda Status -->
+                <div class="grid grid-cols-2 gap-2 text-xs text-slate-600 bg-slate-50 p-2.5 rounded-xl border border-slate-200 mb-4">
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-3.5 h-3.5 rounded bg-emerald-600 inline-block"></span> Sudah Dijawab
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-3.5 h-3.5 rounded bg-amber-400 inline-block"></span> Ragu-Ragu
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-3.5 h-3.5 rounded bg-white border border-slate-300 inline-block"></span> Belum Dijawab
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-3.5 h-3.5 rounded ring-2 ring-blue-600 bg-blue-50 inline-block"></span> Aktif
+                    </div>
+                </div>
+
+                <button onclick="openConfirmFinishModal()"
+                    class="mt-auto w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl shadow-md shadow-emerald-600/20 transition flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span>SELESAI UJIAN</span>
+                </button>
+            </div>
+        </aside>
+    </main>
+
+    <!-- ================= HALAMAN 3: HASIL EVALUASI & CETAK ================= -->
+    <main id="screen-result" class="hidden flex-grow max-w-5xl w-full mx-auto p-4 sm:p-6">
+        <div class="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 sm:p-10 print-container">
+            
+            <!-- Kop Laporan Resmi (Muncul di Layar & Print) -->
+            <div class="border-b-4 border-double border-slate-800 pb-4 mb-6 text-center">
+                <div class="text-xs sm:text-sm font-semibold uppercase tracking-widest text-slate-600">Pemerintah Kabupaten Temanggung • Dinas Pendidikan, Kepemudaan dan Olahraga</div>
+                <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-0.5">SMP NEGERI 2 NGADIREJO</h1>
+                <p class="text-xs text-slate-600">Laporan Hasil Evaluasi Asesmen Sumatif Berbasis Komputer (CBT)</p>
+            </div>
+
+            <!-- Baris Tombol Aksi (Disembunyikan saat dicetak) -->
+            <div class="flex flex-wrap justify-between items-center gap-3 bg-slate-100 p-4 rounded-xl mb-6 no-print border border-slate-200">
+                <div class="text-sm font-medium text-slate-700">
+                    Ujian telah selesai! Silakan cetak bukti hasil evaluasi atau unduh rekap data.
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="window.print()"
+                        class="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-4 py-2 rounded-lg text-sm flex items-center gap-2 shadow-sm transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                        <span>Cetak Hasil Ujian</span>
+                    </button>
+                    <button onclick="exportCSV()"
+                        class="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold px-4 py-2 rounded-lg text-sm flex items-center gap-2 shadow-sm transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        <span>Ekspor CSV</span>
+                    </button>
+                    <button onclick="exportJSON()"
+                        class="bg-slate-700 hover:bg-slate-800 text-white font-semibold px-4 py-2 rounded-lg text-sm flex items-center gap-2 shadow-sm transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                        <span>Ekspor JSON</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Identitas Siswa & Detail Sesi -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 text-sm">
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1.5">
+                    <div class="flex justify-between"><span class="text-slate-500">Nama Peserta Didik:</span> <strong id="res-nama" class="text-slate-900">-</strong></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Kelas / No. Absen:</span> <strong id="res-kelas-absen" class="text-slate-900">-</strong></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Mata Pelajaran:</span> <strong class="text-slate-900">Informatika (Kelas IX)</strong></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Materi Pokok:</span> <strong class="text-slate-900">Jaringan Komputer & Internet</strong></div>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1.5">
+                    <div class="flex justify-between"><span class="text-slate-500">Guru Pengampu:</span> <strong class="text-slate-900">Budi Winarno, S.Kom.</strong></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Waktu Mulai:</span> <strong id="res-start-time" class="text-slate-900">-</strong></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Waktu Selesai:</span> <strong id="res-end-time" class="text-slate-900">-</strong></div>
+                    <div class="flex justify-between"><span class="text-slate-500">KKTP Mata Pelajaran:</span> <strong class="text-slate-900">80</strong></div>
+                </div>
+            </div>
+
+            <!-- Kotak Skor Utama & Status KKTP -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6 text-center">
+                <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl">
+                    <div class="text-xs font-semibold text-emerald-700 uppercase">Jawaban Benar</div>
+                    <div id="res-correct" class="text-2xl sm:text-3xl font-extrabold text-emerald-800 mt-1">0</div>
+                </div>
+                <div class="bg-red-50 border border-red-200 p-4 rounded-xl">
+                    <div class="text-xs font-semibold text-red-700 uppercase">Jawaban Salah / Kosong</div>
+                    <div id="res-wrong" class="text-2xl sm:text-3xl font-extrabold text-red-800 mt-1">0</div>
+                </div>
+                <div class="bg-blue-50 border border-blue-200 p-4 rounded-xl">
+                    <div class="text-xs font-semibold text-blue-700 uppercase">Nilai Akhir (Skala 100)</div>
+                    <div id="res-score" class="text-3xl sm:text-4xl font-black text-blue-900 mt-0.5">0</div>
+                </div>
+                <div id="res-status-box" class="border p-4 rounded-xl flex flex-col justify-center items-center">
+                    <div class="text-xs font-semibold uppercase mb-1">Status Ketercapaian</div>
+                    <div id="res-status-text" class="text-sm sm:text-base font-extrabold px-3 py-1 rounded-lg">-</div>
+                </div>
+            </div>
+
+            <!-- Kolom Tanda Tangan Resmi (Sangat rapi saat Print) -->
+            <div class="grid grid-cols-2 gap-8 my-8 pt-4 text-center text-sm avoid-break">
+                <div>
+                    <p class="text-slate-700">Mengetahui,</p>
+                    <p class="font-semibold text-slate-800">Orang Tua / Wali Siswa</p>
+                    <div class="h-16"></div>
+                    <p class="font-bold text-slate-900 underline decoration-dotted">( ........................................ )</p>
+                </div>
+                <div>
+                    <p class="text-slate-700" id="res-sign-date">Ngadirejo, ............................</p>
+                    <p class="font-semibold text-slate-800">Guru Mata Pelajaran Informatika</p>
+                    <div class="h-16"></div>
+                    <p class="font-bold text-slate-900 underline">Budi Winarno, S.Kom.</p>
+                </div>
+            </div>
+
+            <!-- Rincian Pembahasan & Kunci Jawaban -->
+            <div class="border-t-2 border-slate-200 pt-6 mt-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold text-slate-800">Rincian Analisis Jawaban & Pembahasan (30 Soal)</h3>
+                    <button onclick="toggleReviewSection()" id="btn-toggle-review" class="no-print text-xs font-semibold bg-slate-200 hover:bg-slate-300 text-slate-800 px-3 py-1.5 rounded-lg transition">
+                        Sembunyikan Rincian
+                    </button>
+                </div>
+                <div id="review-list" class="space-y-4">
+                    <!-- Diisi via JS -->
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ================= MODAL KONFIRMASI SELESAI UJIAN ================= -->
+    <div id="modal-confirm" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 no-print">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
+            <div class="flex items-center gap-3 text-amber-600 mb-3">
+                <div class="bg-amber-100 p-2.5 rounded-full">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900">Konfirmasi Selesai Ujian</h3>
+            </div>
+            
+            <p id="confirm-summary-text" class="text-sm text-slate-600 leading-relaxed mb-5">
+                Apakah Anda yakin ingin mengakhiri sesi ujian ini?
+            </p>
+
+            <div class="flex justify-end gap-3">
+                <button onclick="closeConfirmFinishModal()"
+                    class="px-4 py-2.5 rounded-xl font-semibold text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition">
+                    Kembali Mengerjakan
+                </button>
+                <button onclick="finishExam(false)"
+                    class="px-5 py-2.5 rounded-xl font-bold text-sm bg-emerald-600 hover:bg-emerald-700 text-white shadow-md transition">
+                    Ya, Kumpulkan Jawaban
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MODAL PEMBERITAHUAN WAKTU HABIS ================= -->
+    <div id="modal-timeout" class="hidden fixed inset-0 bg-slate-900/75 backdrop-blur-sm z-50 flex items-center justify-center p-4 no-print">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl text-center">
+            <div class="w-14 h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Waktu Ujian Telah Habis!</h3>
+            <p class="text-sm text-slate-600 mb-5">
+                Batas waktu pengerjaan 60 menit telah berakhir. Jawaban Anda telah dikunci dan diproses secara otomatis oleh sistem.
+            </p>
+            <button onclick="closeTimeoutModal()"
+                class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 rounded-xl transition">
+                Lihat Hasil Evaluasi
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= SCRIPT LOGIKA CBT & BANK 40 SOAL HOTS ================= -->
+    <script>
+        /**
+         * BANK SOAL HOTS INFORMATIKA KELAS IX (KURIKULUM MERDEKA FASE D)
+         * Materi: Jaringan Komputer dan Internet
+         * Jumlah: 40 Soal Pilihan Ganda (Index 0 pada options selalu merupakan jawaban benar sebelum diacak)
+         */
+        const QUESTION_BANK = [
+            {
+                id: 1,
+                topic: "Topologi Jaringan",
+                question: "Sebuah laboratorium komputer di SMPN 2 Ngadirejo memiliki 25 unit komputer klien yang terhubung ke satu perangkat Switch pusat. Suatu hari, kabel UTP yang menghubungkan PC-14 ke Switch putus akibat terinjak. Berdasarkan analisis karakteristik topologi jaringan yang digunakan, dampak yang terjadi pada laboratorium tersebut adalah...",
+                options: [
+                    "Hanya PC-14 yang terputus dari jaringan, sedangkan 24 komputer lainnya tetap dapat berkomunikasi dengan normal.",
+                    "Seluruh komputer di laboratorium mengalami kelumpuhan koneksi karena jalur utama (backbone) terputus.",
+                    "Data dari PC-15 hingga PC-25 akan melambat drastis karena harus memutar melalui jalur cadangan.",
+                    "Switch pusat akan mengalami mati total akibat arus balik dari kabel UTP yang terputus."
+                ],
+                explanation: "Jaringan yang terhubung ke satu perangkat konsentrator pusat (Switch) menggunakan Topologi Star (Bintang). Keunggulan utama topologi Star adalah isolasi kesalahan: jika satu kabel klien putus, hanya klien tersebut yang terganggu."
+            },
+            {
+                id: 2,
+                topic: "IP Address & Subnetting",
+                question: "Seorang teknisi jaringan mengonfigurasi dua komputer dalam satu ruang guru agar dapat saling berbagi file tanpa melalui router. Komputer A diberi alamat IP <code>192.168.10.25</code> dengan Subnet Mask <code>255.255.255.0</code>. Agar Komputer B dapat terhubung langsung dalam satu segmen jaringan yang sama, konfigurasi IP yang paling tepat untuk Komputer B adalah...",
+                options: [
+                    "IP Address: 192.168.10.102 | Subnet Mask: 255.255.255.0",
+                    "IP Address: 192.168.11.25 | Subnet Mask: 255.255.255.0",
+                    "IP Address: 192.168.10.25 | Subnet Mask: 255.255.255.0",
+                    "IP Address: 192.168.10.255 | Subnet Mask: 255.255.255.0"
+                ],
+                explanation: "Dengan Subnet Mask 255.255.255.0 (/24), tiga oktet pertama (192.168.10) merupakan Network ID yang harus sama, sedangkan oktet terakhir (Host ID) harus unik antara 1 hingga 254 (tidak boleh sama dengan .25 dan tidak boleh .255 karena alamat broadcast)."
+            },
+            {
+                id: 3,
+                topic: "Troubleshooting Konektivitas",
+                question: "Rina mencoba mengakses situs e-learning sekolah melalui peramban (browser), namun muncul pesan kesalahan <em>'DNS_PROBE_FINISHED_NXDOMAIN'</em>. Ketika Rina melakukan pengujian melalui Command Prompt dengan perintah <code>ping 8.8.8.8</code>, hasilnya menunjukkan <em>Reply from 8.8.8.8: bytes=32 time=24ms</em>. Kesimpulan analisis yang paling tepat dari kasus tersebut adalah...",
+                options: [
+                    "Koneksi internet perangkat Rina sebenarnya aktif, tetapi layanan penerjemah nama domain ke alamat IP mengalami gangguan.",
+                    "Kabel jaringan atau adaptor Wi-Fi pada laptop Rina rusak sehingga tidak ada paket data yang keluar.",
+                    "Server e-learning sekolah sedang mengalami kelebihan beban (overload) akibat terlalu banyak pengunjung.",
+                    "Alamat IP laptop Rina bentrok (IP Conflict) dengan perangkat lain di jaringan lokal."
+                ],
+                explanation: "Berhasil melakukan ping ke IP publik (8.8.8.8) membuktikan koneksi internet lapis jaringan (Layer 3) berjalan baik. Pesan NXDOMAIN menandakan DNS (Domain Name System) gagal menerjemahkan URL menjadi alamat IP."
+            },
+            {
+                id: 4,
+                topic: "Keamanan Data & Enkripsi",
+                question: "Saat melakukan transaksi perbankan daring melalui jaringan Wi-Fi publik di kafe, Budi memastikan bahwa alamat situs diawali dengan <code>https://</code> dan terdapat ikon gembok tertutup di bilah alamat browser. Fungsi krusial mekanisme tersebut dalam melindungi data Budi dari serangan penyadapan (sniffing) adalah...",
+                options: [
+                    "Mengenkripsi seluruh paket data yang dikirim dan diterima antara browser dan server menggunakan protokol TLS/SSL sehingga tidak terbaca oleh penyadap.",
+                    "Menyembunyikan alamat IP asli perangkat Budi sehingga tidak dapat dilacak oleh pemilik kafe.",
+                    "Memblokir secara otomatis semua virus dan malware yang mencoba masuk melalui jaringan Wi-Fi kafe.",
+                    "Mempercepat kecepatan unggah dan unduh data perbankan dengan memotong jalur antrean router."
+                ],
+                explanation: "HTTPS menggunakan protokol enkripsi SSL/TLS untuk mengacak data selama transit. Meskipun peretas menyadap paket data di Wi-Fi publik, isinya berupa ciphertext yang tidak bisa dibaca tanpa kunci dekripsi."
+            },
+            {
+                id: 5,
+                topic: "Perangkat Keras Jaringan",
+                question: "Sekolah berencana menghubungkan dua gedung yang berjarak 350 meter. Gedung A adalah pusat server internet, sedangkan Gedung B membutuhkan akses jaringan yang stabil berkecepatan tinggi tanpa gangguan interferensi gelombang elektromagnetik. Pemilihan media transmisi yang paling tepat beserta alasannya adalah...",
+                options: [
+                    "Kabel Fiber Optic, karena mampu menjangkau jarak ratusan meter hingga kilometer tanpa pelemahan sinyal signifikan dan kebal interferensi elektromagnetik.",
+                    "Kabel UTP Cat-6, karena murah dan memiliki batas maksimal panjang tarikan kabel hingga 500 meter tanpa repeater.",
+                    "Kabel Coaxial RG-58, karena menggunakan gelombang cahaya yang tidak terpengaruh cuaca ekstrem.",
+                    "Koneksi Bluetooth kelas industri, karena mampu menembus dinding beton antar gedung hingga jarak 500 meter."
+                ],
+                explanation: "Kabel tembaga (UTP) memiliki batas efektif maksimal 100 meter sebelum sinyal melemah (attenuation). Untuk jarak 350 meter antar gedung dengan stabilitas tinggi dan bebas interferensi, Fiber Optic adalah solusi terbaik."
+            },
+            {
+                id: 6,
+                topic: "Bandwidth & Throughput",
+                question: "Sebuah sekolah berlangganan paket internet dengan bandwidth 100 Mbps (Megabits per second). Seorang guru mengunduh file video pembelajaran berukuran 600 MB (Megabytes). Jika kondisi jaringan ideal dan tidak ada pengguna lain, waktu minimum teoritis yang dibutuhkan untuk menyelesaikan unduhan tersebut adalah...",
+                options: [
+                    "48 detik",
+                    "6 detik",
+                    "60 detik",
+                    "80 detik"
+                ],
+                explanation: "Konversi satuan: 1 Byte = 8 bits. Ukuran file = 600 MB × 8 = 4.800 Megabits (Mb). Waktu unduh = Ukuran data (Mb) / Kecepatan (Mbps) = 4.800 Mb / 100 Mbps = 48 detik."
+            },
+            {
+                id: 7,
+                topic: "Perangkat Keras Jaringan",
+                question: "Perhatikan perbedaan fungsi perangkat jaringan berikut: Di ruang TU terdapat 8 komputer yang perlu dihubungkan agar dapat berbagi printer lokal. Di sisi lain, sekolah juga membutuhkan perangkat yang dapat membagikan koneksi internet dari ISP ke seluruh segmen jaringan sekolah sekaligus mengatur lalu lintas antar jaringan yang berbeda. Pasangan perangkat yang tepat secara berurutan adalah...",
+                options: [
+                    "Switch untuk menghubungkan komputer dalam satu LAN, dan Router untuk menghubungkan jaringan lokal ke jaringan internet (WAN).",
+                    "Modem untuk menghubungkan komputer dalam satu LAN, dan Repeater untuk mengatur lalu lintas antar jaringan berbeda.",
+                    "Access Point untuk menghubungkan kabel UTP komputer TU, dan Hub untuk menerjemahkan sinyal analog ke digital.",
+                    "Bridge untuk membagikan alamat IP otomatis ke internet, dan NIC untuk memperkuat sinyal Wi-Fi antar lantai."
+                ],
+                explanation: "Switch bekerja pada Data Link Layer (MAC Address) untuk menghubungkan perangkat dalam satu jaringan lokal (LAN), sedangkan Router bekerja pada Network Layer (IP Address) untuk merutekan paket antar jaringan berbeda (LAN ke WAN/Internet)."
+            },
+            {
+                id: 8,
+                topic: "Keamanan Siber (Phishing)",
+                question: "Siti menerima pesan WhatsApp yang mengatasnamakan layanan kurir paket. Pesan tersebut berisi tautan <code>http://cek-resi-paketku.xyz/update.apk</code> dan meminta Siti mengunduh aplikasi tersebut agar paketnya segera dikirim. Jika Siti mengunduh dan menginstalnya, risiko keamanan paling berbahaya yang mengancam data perbankan di ponselnya adalah...",
+                options: [
+                    "Aplikasi berbahaya (Trojan/Spyware) dapat meminta izin membaca SMS (termasuk kode OTP m-banking) dan mencuri kredensial akun secara diam-diam.",
+                    "Baterai ponsel Siti akan langsung meledak akibat kelebihan beban prosesor saat membuka tautan.",
+                    "Nomor WhatsApp Siti akan otomatis terhapus dari server pusat secara permanen.",
+                    "Kapasitas penyimpanan cloud Google Drive Siti akan bertambah secara ilegal."
+                ],
+                explanation: "Modus penipuan file .apk palsu adalah teknik social engineering untuk menanamkan malware/spyware yang menyadap notifikasi SMS/OTP perbankan korban."
+            },
+            {
+                id: 9,
+                topic: "Protokol Jaringan",
+                question: "Ketika melakukan panggilan video (video call) melalui aplikasi konferensi daring, terkadang gambar terlihat sedikit pecah selama sepersekian detik namun percakapan tetap berjalan langsung (real-time) tanpa jeda panjang untuk mengulang bagian yang hilang. Protokol transport yang paling berperan dalam mekanisme pengiriman data real-time tersebut adalah...",
+                options: [
+                    "UDP (User Datagram Protocol), karena mengutamakan kecepatan pengiriman tanpa melakukan pengecekan ulang paket yang hilang (connectionless).",
+                    "TCP (Transmission Control Protocol), karena menjamin setiap paket video yang hilang harus dikirim ulang sebelum video dilanjutkan.",
+                    "SMTP (Simple Mail Transfer Protocol), karena dirancang khusus untuk mengirim aliran data multimedia berkapasitas besar.",
+                    "FTP (File Transfer Protocol), karena mampu mengompresi ukuran video secara otomatis di server penerima."
+                ],
+                explanation: "Aplikasi real-time seperti video call dan game online menggunakan UDP karena latensi rendah lebih penting daripada kesempurnaan paket; paket yang terlambat/hilang diabaikan agar komunikasi tetap sinkron."
+            },
+            {
+                id: 10,
+                topic: "IP Address & DHCP",
+                question: "Di sebuah sekolah dengan 150 perangkat gawai siswa dan guru yang keluar-masuk area Wi-Fi setiap hari, administrator jaringan mengaktifkan layanan DHCP Server pada router utama. Keuntungan strategis penggunaan DHCP dibandingkan pengaturan IP Static pada skenario ini adalah...",
+                options: [
+                    "Mencegah terjadinya konflik alamat IP (IP Conflict) dan mengotomatisasi distribusi konfigurasi jaringan secara efisien saat perangkat terhubung.",
+                    "Menjamin setiap perangkat selalu mendapatkan alamat IP publik yang sama meskipun berpindah ke jaringan seluler.",
+                    "Meningkatkan kecepatan transfer data Wi-Fi hingga dua kali lipat karena tidak memerlukan alamat MAC.",
+                    "Memblokir otomatis perangkat asing yang mencoba masuk tanpa memerlukan kata sandi Wi-Fi."
+                ],
+                explanation: "DHCP (Dynamic Host Configuration Protocol) secara otomatis meminjamkan (lease) alamat IP unik kepada klien yang terhubung sehingga administrator tidak perlu mengatur manual dan terhindar dari bentrok IP."
+            },
+            {
+                id: 11,
+                topic: "Jaringan Nirkabel (Wi-Fi)",
+                question: "Sebuah ruang kelas memiliki dinding beton tebal dan banyak perangkat elektronik yang beroperasi pada frekuensi 2.4 GHz (seperti perangkat Bluetooth). Ketika dipasang Access Point Dual-Band (2.4 GHz dan 5 GHz), siswa yang duduk tepat di dekat Access Point mengeluhkan koneksi 2.4 GHz lambat, sementara siswa di luar ruangan sulit menangkap sinyal 5 GHz. Analisis yang tepat atas fenomena ini adalah...",
+                options: [
+                    "Frekuensi 5 GHz memiliki kecepatan tinggi dan minim interferensi namun daya tembus dindingnya lebih lemah dibanding 2.4 GHz.",
+                    "Frekuensi 2.4 GHz memiliki kecepatan transfer data jauh lebih tinggi daripada 5 GHz tetapi jangkauannya sangat pendek.",
+                    "Frekuensi 5 GHz hanya dapat digunakan oleh komputer desktop yang memiliki antena eksternal.",
+                    "Dinding beton memantulkan sinyal 2.4 GHz sehingga kecepatannya menjadi terlalu tinggi untuk diterima ponsel."
+                ],
+                explanation: "Dalam fisika gelombang radio Wi-Fi, frekuensi lebih rendah (2.4 GHz) menembus penghalang lebih baik dan menjangkau lebih jauh, namun rentan interferensi. Frekuensi lebih tinggi (5 GHz) menawarkan kecepatan lebih tinggi dan kanal lebih luas, namun jangkauan dan daya tembus dindingnya lebih pendek."
+            },
+            {
+                id: 12,
+                topic: "Arsitektur Jaringan",
+                question: "Perhatikan pernyataan berikut:\n1) Menggunakan infrastruktur jaringan publik (internet) sebagai jalur transmisi.\n2) Membuat terowongan terenkripsi (encrypted tunnel) antar perangkat.\n3) Menyembunyikan alamat IP asli pengguna dari situs tujuan.\nTeknologi jaringan yang bekerja berdasarkan ketiga prinsip tersebut untuk mengamankan akses jarak jauh pegawai ke server kantor adalah...",
+                options: [
+                    "VPN (Virtual Private Network)",
+                    "LAN (Local Area Network)",
+                    "PAN (Personal Area Network)",
+                    "MAN (Metropolitan Area Network)"
+                ],
+                explanation: "VPN menciptakan jaringan privat virtual terenkripsi di atas jaringan publik (internet), memungkinkan akses aman ke sumber daya internal sekaligus menyamarkan alamat IP asal."
+            },
+            {
+                id: 13,
+                topic: "Troubleshooting Jaringan",
+                question: "Andi mengetikkan perintah <code>tracert www.kemdikbud.go.id</code> pada terminal komputernya. Hasilnya menunjukkan paket data berhenti pada lompatan (hop) ke-2 yaitu alamat IP router sekolah, diikuti pesan <em>'Request timed out'</em> pada hop ke-3 dan seterusnya. Langkah diagnosis paling logis yang harus dilakukan Andi adalah...",
+                options: [
+                    "Memeriksa koneksi internet dari router sekolah menuju ISP (modem utama), karena jaringan lokal menuju router sudah terhubung.",
+                    "Mengganti kartu jaringan (LAN Card) pada komputer Andi karena rusak total.",
+                    "Menghapus seluruh riwayat penjelajahan (browser history) pada komputer Andi.",
+                    "Mengganti kabel monitor dan keyboard karena tidak merespons perintah server."
+                ],
+                explanation: "Perintah tracert melacak rute paket dari hop ke hop. Jika hop 1-2 (hingga router sekolah) berhasil tetapi gagal menuju hop berikutnya (ISP), masalah terletak pada jalur WAN antara router sekolah dan ISP."
+            },
+            {
+                id: 14,
+                topic: "Keamanan Jaringan (Firewall)",
+                question: "Administrator jaringan SMPN 2 Ngadirejo ingin memastikan bahwa siswa di laboratorium komputer hanya dapat mengakses situs web pendidikan (port 80 dan 443) serta memblokir akses ke server game online tertentu yang menggunakan port khusus. Fitur keamanan jaringan yang harus dikonfigurasi oleh administrator tersebut adalah...",
+                options: [
+                    "Firewall (Packet Filtering)",
+                    "Defragmenter",
+                    "DHCP Relay",
+                    "MAC Cloning"
+                ],
+                explanation: "Firewall berfungsi mengawasi dan menyaring lalu lintas jaringan masuk dan keluar berdasarkan aturan keamanan tertentu (seperti alamat IP, protokol, dan nomor port)."
+            },
+            {
+                id: 15,
+                topic: "Model Referensi OSI / TCP-IP",
+                question: "Ketika seorang siswa mengirimkan tugas melalui email, data teks dan lampiran dokumen dipecah menjadi paket-paket kecil, diberi nomor urut, dan ditambahkan alamat IP tujuan sebelum diubah menjadi sinyal listrik/cahaya oleh kartu jaringan. Proses pembungkusan data dengan informasi header pada setiap lapisan protokol jaringan ini dikenal dengan istilah...",
+                options: [
+                    "Enkapsulasi (Encapsulation)",
+                    "Dekripsi (Decryption)",
+                    "Topologi (Topology)",
+                    "Multiplexing"
+                ],
+                explanation: "Enkapsulasi adalah proses menambahkan informasi header (dan trailer) dari setiap lapisan protokol (Application, Transport, Network, Data Link) saat data bergerak turun sebelum ditransmisikan."
+            },
+            {
+                id: 16,
+                topic: "Cloud Computing & Penyimpanan",
+                question: "Kelompok belajar kelas IX sedang menyusun laporan praktikum Informatika secara bersamaan dari rumah masing-masing menggunakan Google Docs. Perubahan yang diketik oleh anggota A langsung terlihat oleh anggota B dan C secara real-time tanpa perlu mengirim file bolak-balik. Konsep komputasi jaringan yang dimanfaatkan dalam aktivitas ini adalah...",
+                options: [
+                    "Software as a Service (SaaS) berbasis Cloud Computing",
+                    "Peer-to-Peer File Sharing lokal",
+                    "Cold Storage Backup",
+                    "Offline Local Hosting"
+                ],
+                explanation: "Aplikasi produktivitas berbasis web seperti Google Docs adalah contoh SaaS (Software as a Service) dalam ekosistem Cloud Computing yang memungkinkan kolaborasi real-time melalui internet."
+            },
+            {
+                id: 17,
+                topic: "Keamanan Akun (2FA)",
+                question: "Meskipun kata sandi akun email milik Pak Budi cukup rumit, seorang peretas berhasil mendapatkannya melalui kebocoran data situs lain. Namun, peretas tersebut tetap gagal masuk ke akun email Pak Budi karena sistem meminta kode verifikasi 6 digit yang hanya muncul di aplikasi Google Authenticator di ponsel Pak Budi. Mekanisme keamanan yang menggagalkan peretasan ini adalah...",
+                options: [
+                    "Two-Factor Authentication (2FA) berbasis kombinasi 'sesuatu yang diketahui' dan 'sesuatu yang dimiliki'.",
+                    "Single Sign-On (SSO) berbasis pengenalan alamat MAC perangkat.",
+                    "Captive Portal berbasis persetujuan syarat dan ketentuan layanan.",
+                    "End-to-End Backup berbasis penyimpanan lokal."
+                ],
+                explanation: "2FA menggabungkan dua faktor autentikasi berbeda: faktor pengetahuan (password) dan faktor kepemilikan (perangkat ponsel/token OTP), sehingga pencurian password saja tidak cukup untuk membobol akun."
+            },
+            {
+                id: 18,
+                topic: "Perangkat Keras Jaringan",
+                question: "Dalam sebuah jaringan sekolah, terdapat satu buah Switch unmanaged 16-port yang terhubung ke 16 komputer. Ketika Komputer-1 mengirim data khusus hanya untuk Komputer-5, bagaimana cara Switch modern menangani paket data tersebut dibandingkan dengan perangkat lama bernama Hub?",
+                options: [
+                    "Switch membaca tabel MAC Address dan mengirimkan frame data hanya ke port tujuan tempat Komputer-5 terhubung.",
+                    "Switch menyiarkan (broadcast) data tersebut ke seluruh 15 komputer lainnya agar lebih cepat sampai.",
+                    "Switch mengubah alamat MAC Komputer-1 menjadi alamat IP publik sebelum diteruskan ke Komputer-5.",
+                    "Switch menahan data di memori selama 10 detik untuk memastikan tidak ada komputer lain yang menyala."
+                ],
+                explanation: "Switch bersifat cerdas karena menyimpan tabel MAC Address untuk setiap port, sehingga frame dikirim secara unicast hanya ke port tujuan (menghindari tabrakan data/collision), berbeda dengan Hub yang menyiarkan ke semua port."
+            },
+            {
+                id: 19,
+                topic: "Internet of Things (IoT)",
+                question: "Sebuah sistem penyiraman tanaman otomatis di kebun sekolah menggunakan sensor kelembapan tanah yang terhubung ke mikrokontroler Wi-Fi. Ketika kelembapan tanah turun di bawah 30%, mikrokontroler mengirimkan data ke server cloud dan mengaktifkan katup air secara otomatis, serta mengirimkan notifikasi ke ponsel siswa. Ekosistem teknologi jaringan yang diterapkan pada sistem ini adalah...",
+                options: [
+                    "Internet of Things (IoT)",
+                    "Virtual Reality (VR)",
+                    "Blockchain Ledger",
+                    "Mainframe Terminal"
+                ],
+                explanation: "Internet of Things (IoT) adalah konsep di mana objek fisik yang dilengkapi sensor dan perangkat lunak terhubung ke internet untuk bertukar data dan melakukan otomasi."
+            },
+            {
+                id: 20,
+                topic: "Etika & Keamanan Digital",
+                question: "Saat menggunakan fasilitas Wi-Fi gratis di area publik tanpa kata sandi (Open Wi-Fi), risiko ancaman keamanan bernama <em>'Evil Twin Attack'</em> dapat terjadi. Bentuk serangan Evil Twin yang perlu diwaspadai pengguna adalah...",
+                options: [
+                    "Pelaku membuat hotspot Wi-Fi palsu dengan nama (SSID) yang mirip atau identik dengan Wi-Fi resmi untuk menyadap lalu lintas data pengguna yang terkoneksi.",
+                    "Pelaku mengirimkan dua kali lipat tagihan kuota internet ke nomor telepon pengguna secara otomatis.",
+                    "Pelaku menggandakan kapasitas baterai ponsel pengguna hingga mengalami kerusakan hardware.",
+                    "Pelaku menghapus sistem operasi perangkat secara jarak jauh hanya melalui pancaran gelombang radio."
+                ],
+                explanation: "Evil Twin Attack adalah titik akses Wi-Fi palsu yang menyamar sebagai jaringan sah. Saat korban terhubung, penyerang dapat melakukan serangan Man-in-the-Middle (MitM)."
+            },
+            {
+                id: 21,
+                topic: "Analisis Alamat IP & MAC",
+                question: "Perhatikan dua jenis alamat identifikasi perangkat berikut:\n- Alamat X: <code>00:1A:2B:3C:4D:5E</code>\n- Alamat Y: <code>192.168.1.45</code>\nJika sebuah laptop berpindah dari jaringan Wi-Fi rumah ke jaringan Wi-Fi SMPN 2 Ngadirejo, pernyataan yang paling akurat mengenai perubahan kedua alamat tersebut adalah...",
+                options: [
+                    "Alamat X (MAC Address) tetap sama karena tertanam pada perangkat keras jaringan, sedangkan Alamat Y (IP Address) berubah mengikuti jaringan sekolah.",
+                    "Alamat X (IP Address) tetap sama di seluruh dunia, sedangkan Alamat Y (MAC Address) diacak ulang oleh router sekolah.",
+                    "Kedua alamat tersebut tidak akan pernah berubah meskipun laptop berpindah negara.",
+                    "Kedua alamat tersebut otomatis terhapus dan diganti dengan nomor seri prosesor."
+                ],
+                explanation: "MAC Address (Alamat X) adalah alamat fisik yang tertanam permanen di kartu jaringan (NIC), sedangkan IP Address (Alamat Y) adalah alamat logis yang diberikan secara dinamis sesuai jaringan tempat perangkat berada."
+            },
+            {
+                id: 22,
+                topic: "Kualitas Layanan Jaringan (QoS)",
+                question: "Seorang siswa mengeluhkan bahwa saat bermain game daring, karakter dalam game sering bergerak patah-patah (delay), meskipun hasil uji kecepatan unduh (download speed) menunjukkan angka tinggi yaitu 50 Mbps. Parameter kualitas jaringan yang paling mungkin bermasalah pada kasus tersebut adalah...",
+                options: [
+                    "Latensi (Ping) tinggi dan Jitter yang tidak stabil.",
+                    "Kapasitas penyimpanan harddisk yang hampir penuh.",
+                    "Resolusi layar monitor yang terlalu tinggi.",
+                    "Ukuran bandwidth unggah yang terlalu besar."
+                ],
+                explanation: "Game daring real-time sangat bergantung pada latensi rendah (ping kecil) dan jitter minimal (kestabilan waktu tiba paket), bukan sekadar besarnya kapasitas bandwidth unduh."
+            },
+            {
+                id: 23,
+                topic: "Topologi & Skalabilitas",
+                question: "Sebuah sekolah memiliki 3 gedung terpisah. Di masing-masing gedung dipasang jaringan bertopologi Star menggunakan Switch lantai, kemudian seluruh Switch utama di ketiga gedung dihubungkan ke satu jalur tulang punggung (backbone) pusat. Jenis topologi gabungan (hybrid) yang diterapkan sekolah tersebut adalah...",
+                options: [
+                    "Topologi Tree (Pohon)",
+                    "Topologi Ring (Cincin)",
+                    "Topologi Full Mesh",
+                    "Topologi Point-to-Point"
+                ],
+                explanation: "Topologi Tree merupakan kombinasi hierarkis antara topologi Bus (sebagai backbone) dan topologi Star (pada setiap cabang/gedung), sangat cocok untuk jaringan berskala kampus atau sekolah bertingkat."
+            },
+            {
+                id: 24,
+                topic: "DNS & URL",
+                question: "Perhatikan struktur alamat situs web berikut: <code>https://perpustakaan.smpn2ngadirejo.sch.id/katalog</code>. Bagian yang menunjukkan subdomain dan ekstensi domain khusus institusi pendidikan di Indonesia secara berurutan adalah...",
+                options: [
+                    "perpustakaan dan .sch.id",
+                    "https dan katalog",
+                    "smpn2ngadirejo dan https",
+                    "katalog dan .sch.id"
+                ],
+                explanation: "'perpustakaan' adalah subdomain dari domain utama 'smpn2ngadirejo.sch.id', sedangkan '.sch.id' adalah Second-Level Domain (SLD) resmi untuk sekolah di Indonesia."
+            },
+            {
+                id: 25,
+                topic: "Keamanan Data (Malware)",
+                question: "Sebuah komputer di ruang administrasi tiba-tiba tidak dapat membuka seluruh file dokumen kerja karena ekstensi filenya berubah menjadi <code>.locked</code> dan muncul pesan layar yang meminta tebusan sejumlah uang kripto agar file dapat dikembalikan. Jenis serangan siber yang menimpa komputer tersebut dan tindakan pencegahan paling efektif adalah...",
+                options: [
+                    "Ransomware; dicegah dengan melakukan pencadangan data (backup) rutin secara terpisah (offline/cloud) dan tidak membuka lampiran mencurigakan.",
+                    "Adware; dicegah dengan menurunkan tingkat kecerahan layar monitor saat bekerja.",
+                    "Cookies Tracking; dicegah dengan mematikan speaker komputer saat berselancar di internet.",
+                    "Keylogger; dicegah dengan mengganti mouse berkabel menjadi mouse nirkabel."
+                ],
+                explanation: "Ransomware mengenkripsi data korban dan meminta tebusan. Strategi mitigasi paling ampuh adalah menerapkan aturan backup 3-2-1 agar data dapat dipulihkan tanpa membayar tebusan."
+            },
+            {
+                id: 26,
+                topic: "Protokol Aplikasi",
+                question: "Seorang pengembang web sekolah ingin mengunggah file pembaruan halaman situs web dari laptop lokal menuju server hosting sekolah secara aman agar kata sandi dan file tidak disadap selama proses transfer. Protokol yang paling tepat digunakan adalah...",
+                options: [
+                    "SFTP (SSH File Transfer Protocol)",
+                    "HTTP (Hypertext Transfer Protocol)",
+                    "Telnet",
+                    "ICMP (Internet Control Message Protocol)"
+                ],
+                explanation: "SFTP mengenkripsi baik proses autentikasi maupun transfer file menggunakan terowongan SSH, jauh lebih aman dibandingkan FTP biasa atau Telnet yang mengirim data dalam teks terang (plaintext)."
+            },
+            {
+                id: 27,
+                topic: "Infrastruktur Internet",
+                question: "Ketika siswa di Ngadirejo mengakses server pembelajaran yang berlokasi di Jakarta, data menempuh jarak ratusan kilometer melalui berbagai router milik penyedia layanan internet (ISP) yang saling terhubung. Perangkat router inti pada jaringan internet menentukan jalur terbaik pengiriman paket berdasarkan...",
+                options: [
+                    "Tabel Routing (Routing Table) dan algoritma penentuan jalur tercepat/terefisien.",
+                    "Urutan abjad nama pengguna yang sedang mengakses situs tersebut.",
+                    "Jenis merek laptop atau ponsel yang digunakan oleh siswa.",
+                    "Kapasitas baterai perangkat pengirim dan penerima."
+                ],
+                explanation: "Router menggunakan Routing Table dan protokol routing (seperti BGP/OSPF) untuk menganalisis alamat IP tujuan dan meneruskan paket melalui jalur paling optimal."
+            },
+            {
+                id: 28,
+                topic: "Jaringan Lokal & Sharing",
+                question: "Di ruang guru terdapat satu unit printer yang terhubung melalui kabel USB ke PC-01. Agar PC-02 dan PC-03 yang berada dalam satu jaringan LAN dapat mencetak dokumen langsung ke printer tersebut tanpa memindahkan kabel USB, langkah konfigurasi yang tepat adalah...",
+                options: [
+                    "Mengaktifkan fitur Printer Sharing pada PC-01 dan menambahkan Network Printer tersebut pada PC-02 dan PC-03.",
+                    "Menghubungkan kabel USB printer secara paralel menggunakan splitter ke ketiga komputer sekaligus.",
+                    "Mengunggah semua dokumen ke media sosial terlebih dahulu agar bisa dicetak dari PC-01.",
+                    "Mengubah alamat IP PC-02 dan PC-03 agar sama persis dengan alamat IP PC-01."
+                ],
+                explanation: "Dalam jaringan LAN, sumber daya perangkat keras seperti printer dapat dibagikan (resource sharing) melalui sistem operasi sehingga komputer lain dalam segmen jaringan yang sama dapat menggunakannya."
+            },
+            {
+                id: 29,
+                topic: "Konektivitas Seluler & Tethering",
+                question: "Saat jaringan kabel internet sekolah mengalami pemeliharaan, guru menggunakan fitur <em>Personal Hotspot (Tethering)</em> dari ponsel cerdasnya untuk menghubungkan laptop ke internet. Dalam skema jaringan tersebut, peran ponsel cerdas guru adalah sebagai...",
+                options: [
+                    "Router nirkabel dan Access Point (Gateway) yang menjembatani jaringan seluler (WAN) dengan jaringan lokal laptop (WLAN).",
+                    "Server penyimpanan database utama yang menampung seluruh situs web di dunia.",
+                    "Kabel fiber optic virtual yang mempercepat sinyal satelit langsung ke laptop.",
+                    "Repeater pasif yang hanya memantulkan sinyal Bluetooth dari laptop."
+                ],
+                explanation: "Saat tethering aktif, ponsel bertindak sebagai modem seluler sekaligus router nirkabel (Access Point) yang melakukan NAT (Network Address Translation) untuk membagikan koneksi seluler ke perangkat klien."
+            },
+            {
+                id: 30,
+                topic: "Keamanan Informasi (Kriptografi)",
+                question: "Perhatikan proses komunikasi pesan rahasia berikut:\nPesan asli: <code>UJIAN INFORMATIKA</code> → diubah menggunakan kunci tertentu menjadi → <code>XMMDQ LQIRUPDWLND</code>.\nDalam ilmu keamanan informasi dan jaringan, pesan yang telah disandikan sehingga tidak dapat dipahami maknanya oleh pihak yang tidak berwenang disebut...",
+                options: [
+                    "Ciphertext",
+                    "Plaintext",
+                    "Bandwidth",
+                    "Protocol"
+                ],
+                explanation: "Plaintext adalah pesan asli yang dapat dibaca, sedangkan Ciphertext adalah hasil proses enkripsi (penyandian) yang tidak dapat dibaca tanpa kunci dekripsi."
+            },
+            {
+                id: 31,
+                topic: "Analisis Performa Jaringan",
+                question: "Sebuah jaringan Wi-Fi sekolah memiliki kapasitas total bandwidth 60 Mbps. Saat jam istirahat, 30 siswa terhubung secara bersamaan dan melakukan aktivitas streaming video secara serentak. Jika bandwidth terbagi rata (fair queuing), rata-rata kecepatan yang diterima setiap siswa adalah...",
+                options: [
+                    "2 Mbps (setara dengan sekitar 250 KB/detik)",
+                    "60 Mbps per siswa secara penuh",
+                    "30 Mbps (setara dengan 30 MB/detik)",
+                    "0,5 Mbps (setara dengan 500 MB/detik)"
+                ],
+                explanation: "Total bandwidth 60 Mbps dibagi 30 pengguna = 2 Mbps per pengguna. Dalam satuan Byte (dibagi 8), 2 Mbps = 0,25 MB/s atau 250 KB/s."
+            },
+            {
+                id: 32,
+                topic: "Troubleshooting Perangkat Keras",
+                question: "Lampu indikator port RJ-45 pada kartu jaringan (NIC) komputer menyala oranye berkedip cepat, namun ikon jaringan di pojok kanan bawah layar menampilkan tanda seru kuning (No Internet Access). Analisis kondisi fisik dan logis yang paling sesuai adalah...",
+                options: [
+                    "Koneksi fisik kabel UTP antara komputer dan Switch sudah tersambung baik, namun terdapat masalah pada konfigurasi IP atau jalur menuju internet.",
+                    "Kabel UTP putus total di bagian tengah sehingga tidak ada sinyal listrik yang mengalir.",
+                    "Kartu jaringan komputer terbakar dan tidak terdeteksi oleh sistem operasi.",
+                    "Monitor komputer mengalami kerusakan pada kartu grafis (VGA)."
+                ],
+                explanation: "Lampu indikator RJ-45 yang menyala/berkedip menandakan koneksi fisik (Layer 1) berhasil. Tanda 'No Internet' menunjukkan kendala pada lapisan logis seperti kegagalan DHCP, salah Gateway, atau ISP terputus."
+            },
+            {
+                id: 33,
+                topic: "Topologi Mesh",
+                question: "Sebuah pusat data (Data Center) perbankan nasional menghubungkan 5 server utamanya sedemikian rupa sehingga setiap server terhubung langsung dengan keempat server lainnya tanpa perantara tunggal. Alasan utama pemilihan topologi Full Mesh pada infrastruktur kritis tersebut adalah...",
+                options: [
+                    "Memiliki tingkat redundansi dan toleransi kesalahan (fault tolerance) tertinggi; jika satu jalur putus, data langsung melewati jalur alternatif lainnya.",
+                    "Biaya pembelian kabel dan port jaringan paling murah dibandingkan semua topologi lainnya.",
+                    "Proses instalasi dan penambahan server baru sangat sederhana tanpa perlu konfigurasi ulang.",
+                    "Hanya membutuhkan satu kabel tunggal yang melingkar untuk semua server."
+                ],
+                explanation: "Topologi Full Mesh menghubungkan setiap node ke semua node lainnya. Meskipun mahal dan kompleks, topologi ini menjamin ketersediaan tinggi (high availability) karena tidak memiliki single point of failure."
+            },
+            {
+                id: 34,
+                topic: "Keamanan Browser & Cookie",
+                question: "Ketika berbelanja di situs e-commerce, keranjang belanja tetap menyimpan barang pilihan kita meskipun kita berpindah halaman. Namun, jika kita menggunakan komputer umum di warnet atau laboratorium tanpa keluar (logout), sesi akun kita berisiko dibajak oleh pengguna berikutnya. Komponen data kecil yang disimpan browser untuk mempertahankan status login tersebut adalah...",
+                options: [
+                    "Session Cookies",
+                    "BIOS Firmware",
+                    "Subnet Mask",
+                    "Fiber Core"
+                ],
+                explanation: "Session Cookies menyimpan token identifikasi sesi pengguna di browser. Jika pengguna tidak logout di komputer publik, orang lain bisa langsung masuk ke akun tersebut (Session Hijacking)."
+            },
+            {
+                id: 35,
+                topic: "Konsep IPv4 dan IPv6",
+                question: "Pertumbuhan pesat perangkat Internet of Things (IoT) dan ponsel pintar di seluruh dunia menyebabkan persediaan alamat IPv4 (32-bit) yang berjumlah sekitar 4,3 miliar alamat hampir habis. Solusi standar protokol pengalamatan modern yang dikembangkan untuk menyediakan ruang alamat hampir tak terbatas (128-bit) adalah...",
+                options: [
+                    "IPv6 (Internet Protocol version 6) yang ditulis dalam format heksadesimal.",
+                    "IPv5 yang menggunakan 16-bit bilangan biner.",
+                    "MACv2 yang menggantikan seluruh alamat IP dengan nomor telepon.",
+                    "DNSv4 yang melipatgandakan alamat IPv4 menjadi 8 oktet."
+                ],
+                explanation: "IPv6 menggunakan pengalamatan 128-bit dalam format heksadesimal (menghasilkan 3,4 × 10^38 alamat unik) untuk mengatasi kelangkaan alamat IPv4."
+            },
+            {
+                id: 36,
+                topic: "Kabel Jaringan UTP",
+                question: "Dalam pembuatan kabel jaringan UTP dengan konektor RJ-45, dikenal dua standar pengkabelan yaitu Straight-Through dan Cross-Over. Untuk menghubungkan perangkat yang berbeda jenis seperti Komputer (PC) ke Switch secara optimal, urutan warna kabel yang digunakan pada kedua ujung konektor adalah...",
+                options: [
+                    "Standar yang sama di kedua ujung (misalnya ujung A menggunakan T568B dan ujung B juga menggunakan T568B).",
+                    "Ujung A menggunakan standar T568A dan ujung B menggunakan standar T568B.",
+                    "Hanya menggunakan 2 kabel warna biru saja agar lebih hemat biaya.",
+                    "Urutan warna diacak bebas asalkan semua tembaga menyentuh pin konektor."
+                ],
+                explanation: "Kabel Straight-Through digunakan untuk menghubungkan perangkat berbeda jenis (PC ke Switch, Switch ke Router) dengan urutan pin yang identik pada kedua ujung (T568B - T568B)."
+            },
+            {
+                id: 37,
+                topic: "Serangan DDoS",
+                question: "Sebuah situs layanan publik tiba-tiba tidak dapat diakses oleh masyarakat selama berjam-jam karena jutaan permintaan koneksi palsu dikirimkan secara bersamaan dari ribuan komputer yang telah terinfeksi botnet di seluruh dunia. Jenis serangan siber yang melumpuhkan ketersediaan layanan server ini disebut...",
+                options: [
+                    "DDoS (Distributed Denial of Service)",
+                    "SQL Injection",
+                    "Shoulder Surfing",
+                    "Defragmentation"
+                ],
+                explanation: "DDoS membanjiri bandwidth atau sumber daya server target dengan lalu lintas masif dari banyak sumber (botnet) secara serentak hingga server lumpuh dan menolak pengguna sah."
+            },
+            {
+                id: 38,
+                topic: "Filter Akses Jaringan (MAC Filtering)",
+                question: "Untuk memperketat keamanan Wi-Fi ruang guru agar tidak dapat diakses oleh siswa meskipun mereka mengetahui kata sandi Wi-Fi, teknisi sekolah mendaftarkan alamat fisik unik setiap laptop dan ponsel guru ke dalam daftar putih (whitelist) pada Access Point. Fitur keamanan yang diterapkan teknisi tersebut adalah...",
+                options: [
+                    "MAC Address Filtering",
+                    "Port Forwarding",
+                    "DNS Caching",
+                    "Bandwidth Throttling"
+                ],
+                explanation: "MAC Address Filtering membatasi akses jaringan nirkabel hanya untuk perangkat yang alamat MAC-nya terdaftar dalam daftar izin (whitelist) pada router/Access Point."
+            },
+            {
+                id: 39,
+                topic: "Perbandingan Media Nirkabel",
+                question: "Perhatikan kebutuhan transfer data berikut: Siswa ingin mengirimkan file video berukuran 1,5 GB dari ponsel ke laptop dalam waktu kurang dari 30 detik tanpa menggunakan kuota internet maupun kabel data. Teknologi komunikasi nirkabel jarak dekat yang paling efisien untuk kebutuhan tersebut adalah...",
+                options: [
+                    "Wi-Fi Direct (seperti fitur Nearby Share / Quick Share), karena menawarkan kecepatan transfer jauh lebih tinggi dibanding Bluetooth.",
+                    "Bluetooth versi 2.0, karena memiliki kecepatan transfer hingga 1 Gbps.",
+                    "Infrared (Inframerah), karena mampu menembus tembok dengan kecepatan cahaya.",
+                    "NFC (Near Field Communication), karena dirancang khusus untuk mengirim file video berukuran gigabyte."
+                ],
+                explanation: "Wi-Fi Direct memungkinkan dua perangkat terhubung langsung secara peer-to-peer menggunakan protokol Wi-Fi berkecepatan tinggi tanpa memerlukan router, jauh lebih cepat daripada Bluetooth atau NFC."
+            },
+            {
+                id: 40,
+                topic: "Jejak Digital & Privasi",
+                question: "Setiap kali kita mengunjungi situs web, melakukan pencarian, atau mengunggah foto ke media sosial, server mencatat aktivitas tersebut beserta alamat IP, lokasi, dan waktu aksesnya. Kesadaran penting yang harus dimiliki pelajar terkait jejak digital aktif dan pasif di internet adalah...",
+                options: [
+                    "Jejak digital bersifat permanen, sulit dihapus sepenuhnya, dan dapat memengaruhi reputasi serta keamanan pribadi di masa depan.",
+                    "Jejak digital akan otomatis terhapus bersih setiap kali kita mematikan daya (restart) ponsel.",
+                    "Menggunakan mode Incognito/Samaran membuat aktivitas kita sepenuhnya tidak terlihat oleh ISP maupun administrator jaringan sekolah.",
+                    "Jejak digital hanya terbentuk jika kita mengunggah file berukuran lebih dari 100 MB."
+                ],
+                explanation: "Jejak digital terekam di berbagai server pihak ketiga dan ISP. Mode Incognito hanya mencegah penyimpanan riwayat di browser lokal, tidak menyembunyikan lalu lintas dari jaringan sekolah atau ISP."
+            }
+        ];
+
+        // ================= VARIABEL STATE APLIKASI =================
+        let studentData = {
+            nama: "",
+            kelas: "",
+            absen: "",
+            startTimeObj: null,
+            endTimeObj: null,
+            startTimeStr: "",
+            endTimeStr: ""
+        };
+
+        let examQuestions = []; // 30 soal terpilih yang sudah diacak soal & opsinya
+        let currentIdx = 0;     // Indeks soal aktif (0 - 29)
+        let userAnswers = [];   // Menyimpan indeks opsi yang dipilih user (null jika belum)
+        let userDoubts = [];    // Menyimpan status ragu-ragu (boolean)
+        let timeRemaining = 3600; // 60 menit dalam detik
+        let timerInterval = null;
+        let isExamFinished = false;
+        let lastEvaluationResult = null;
+
+        // ================= FUNGSI JAM REAL-TIME WIB =================
+        function updateRealtimeClock() {
+            const now = new Date();
+            const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateStr = now.toLocaleDateString('id-ID', optionsDate);
+            const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }).replace(/\./g, ':');
+            
+            const clockEl = document.getElementById('realtime-clock');
+            if (clockEl) {
+                clockEl.textContent = `${dateStr} • ${timeStr} WIB`;
+            }
+        }
+        setInterval(updateRealtimeClock, 1000);
+        updateRealtimeClock();
+
+        // ================= ALGORITMA PENGACAKAN (FISHER-YATES) =================
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        /**
+         * Menyiapkan 30 soal acak dari bank 40 soal,
+         * sekaligus mengacak urutan opsi A, B, C, D tanpa merusak kunci jawaban.
+         */
+        function prepareExamQuestions() {
+            // 1. Acak urutan seluruh 40 soal, lalu ambil 30 soal pertama
+            const shuffledBank = shuffleArray(QUESTION_BANK).slice(0, 30);
+
+            // 2. Untuk tiap soal, acak urutan opsi jawabannya
+            examQuestions = shuffledBank.map((item, idx) => {
+                // Tandai opsi mana yang merupakan jawaban benar (di bank soal selalu index 0)
+                const taggedOptions = item.options.map((optText, optIdx) => ({
+                    text: optText,
+                    isCorrect: optIdx === 0
+                }));
+
+                // Acak keempat opsi tersebut
+                const shuffledOptions = shuffleArray(taggedOptions);
+
+                // Cari posisi indeks jawaban benar setelah diacak
+                const newCorrectIndex = shuffledOptions.findIndex(o => o.isCorrect);
+
+                return {
+                    examNumber: idx + 1,
+                    bankId: item.id,
+                    topic: item.topic,
+                    question: item.question,
+                    options: shuffledOptions.map(o => o.text),
+                    correctIndex: newCorrectIndex,
+                    explanation: item.explanation
+                };
+            });
+
+            // Inisialisasi array jawaban dan ragu-ragu
+            userAnswers = new Array(30).fill(null);
+            userDoubts = new Array(30).fill(false);
+        }
+
+        // ================= INISIALISASI & MULAI UJIAN =================
+        document.getElementById('form-login').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nama = document.getElementById('input-nama').value.trim().toUpperCase();
+            const kelas = document.getElementById('input-kelas').value;
+            const absen = document.getElementById('input-absen').value.trim();
+
+            if (!nama || !kelas || !absen) {
+                document.getElementById('login-alert').classList.remove('hidden');
+                return;
+            }
+
+            // Simpan identitas siswa
+            const now = new Date();
+            studentData.nama = nama;
+            studentData.kelas = kelas;
+            studentData.absen = absen;
+            studentData.startTimeObj = now;
+            studentData.startTimeStr = formatDateTimeID(now);
+
+            // Tampilkan identitas di panel ujian
+            document.getElementById('exam-student-name').textContent = studentData.nama;
+            document.getElementById('exam-student-class').textContent = studentData.kelas;
+            document.getElementById('exam-student-absen').textContent = studentData.absen;
+
+            // Siapkan soal acak & navigasi
+            prepareExamQuestions();
+            buildNavGrid();
+            renderQuestion(0);
+
+            // Pindah layar ke ruang ujian
+            document.getElementById('screen-login').classList.add('hidden');
+            document.getElementById('screen-exam').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Mulai timer hitung mundur 60 menit
+            startCountdown();
+        });
+
+        function formatDateTimeID(dateObj) {
+            const tgl = dateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+            const jam = dateObj.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }).replace(/\./g, ':');
+            return `${tgl}, Pukul ${jam} WIB`;
+        }
+
+        // ================= TIMER HITUNG MUNDUR (60 MENIT) =================
+        function startCountdown() {
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                if (isExamFinished) {
+                    clearInterval(timerInterval);
+                    return;
+                }
+
+                timeRemaining--;
+                updateTimerDisplay();
+
+                // Peringatan visual jika waktu sisa <= 5 menit (300 detik)
+                const timerBox = document.getElementById('timer-box');
+                if (timeRemaining <= 300 && timeRemaining > 60) {
+                    timerBox.classList.remove('bg-slate-900');
+                    timerBox.classList.add('bg-amber-600');
+                } else if (timeRemaining <= 60) {
+                    timerBox.classList.remove('bg-amber-600');
+                    timerBox.classList.add('bg-red-600', 'animate-pulse');
+                }
+
+                // Jika waktu habis (0 detik)
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    finishExam(true); // Otomatis selesai karena timeout
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timeRemaining / 60);
+            const secs = timeRemaining % 60;
+            const formatted = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            document.getElementById('countdown-display').textContent = formatted;
+        }
+
+        // ================= RENDER SOAL & NAVIGASI =================
+        function renderQuestion(index) {
+            currentIdx = index;
+            const q = examQuestions[index];
+            const letters = ['A', 'B', 'C', 'D'];
+
+            // Update header soal
+            document.getElementById('current-q-number').textContent = index + 1;
+            document.getElementById('current-q-topic').textContent = q.topic;
+            document.getElementById('question-text').innerHTML = q.question.replace(/\n/g, '<br>');
+
+            // Render opsi A, B, C, D
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach((optText, optIndex) => {
+                const isSelected = userAnswers[index] === optIndex;
+                
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.onclick = () => selectAnswer(optIndex);
+                btn.className = `w-full text-left p-4 rounded-xl border-2 transition flex items-start gap-3.5 group ${
+                    isSelected 
+                    ? 'border-blue-600 bg-blue-50/80 shadow-sm' 
+                    : 'border-slate-200 bg-white hover:border-blue-300 hover:bg-slate-50'
+                }`;
+
+                btn.innerHTML = `
+                    <span class="w-8 h-8 rounded-lg flex-shrink-0 flex items-center justify-center font-bold text-sm transition ${
+                        isSelected 
+                        ? 'bg-blue-600 text-white' 
+                        : 'bg-slate-100 text-slate-700 group-hover:bg-blue-100 group-hover:text-blue-700'
+                    }">
+                        ${letters[optIndex]}
+                    </span>
+                    <span class="text-sm sm:text-base text-slate-800 pt-1 leading-relaxed">${optText}</span>
+                `;
+                optionsContainer.appendChild(btn);
+            });
+
+            // Update status tombol Sebelumnya / Berikutnya
+            document.getElementById('btn-prev').disabled = (index === 0);
+            const btnNext = document.getElementById('btn-next');
+            if (index === examQuestions.length - 1) {
+                btnNext.innerHTML = `
+                    <span>Selesai & Kumpulkan</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                `;
+                btnNext.classList.remove('bg-blue-700', 'hover:bg-blue-800');
+                btnNext.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
+                btnNext.onclick = openConfirmFinishModal;
+            } else {
+                btnNext.innerHTML = `
+                    <span>Berikutnya</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                `;
+                btnNext.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
+                btnNext.classList.add('bg-blue-700', 'hover:bg-blue-800');
+                btnNext.onclick = nextQuestion;
+            }
+
+            // Update checkbox ragu-ragu
+            document.getElementById('checkbox-doubt').checked = userDoubts[index];
+
+            // Refresh grid nomor navigasi
+            updateNavGridUI();
+        }
+
+        function selectAnswer(optIndex) {
+            userAnswers[currentIdx] = optIndex;
+            renderQuestion(currentIdx);
+        }
+
+        function toggleDoubt() {
+            userDoubts[currentIdx] = !userDoubts[currentIdx];
+            document.getElementById('checkbox-doubt').checked = userDoubts[currentIdx];
+            updateNavGridUI();
+        }
+
+        function prevQuestion() {
+            if (currentIdx > 0) {
+                renderQuestion(currentIdx - 1);
+            }
+        }
+
+        function nextQuestion() {
+            if (currentIdx < examQuestions.length - 1) {
+                renderQuestion(currentIdx + 1);
+            }
+        }
+
+        function buildNavGrid() {
+            const grid = document.getElementById('nav-grid');
+            grid.innerHTML = '';
+            for (let i = 0; i < 30; i++) {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.id = `nav-btn-${i}`;
+                btn.textContent = i + 1;
+                btn.onclick = () => renderQuestion(i);
+                grid.appendChild(btn);
+            }
+            updateNavGridUI();
+        }
+
+        function updateNavGridUI() {
+            let answeredCount = 0;
+            let doubtCount = 0;
+
+            for (let i = 0; i < 30; i++) {
+                const btn = document.getElementById(`nav-btn-${i}`);
+                const isAnswered = userAnswers[i] !== null;
+                const isDoubt = userDoubts[i];
+                const isCurrent = (i === currentIdx);
+
+                if (isAnswered) answeredCount++;
+                if (isDoubt) doubtCount++;
+
+                let baseClass = "h-9 rounded-lg font-bold text-xs flex items-center justify-center transition ";
+                
+                if (isDoubt) {
+                    baseClass += "bg-amber-400 text-slate-900 hover:bg-amber-500 ";
+                } else if (isAnswered) {
+                    baseClass += "bg-emerald-600 text-white hover:bg-emerald-700 ";
+                } else {
+                    baseClass += "bg-white border border-slate-300 text-slate-700 hover:bg-slate-100 ";
+                }
+
+                if (isCurrent) {
+                    baseClass += "ring-2 ring-offset-1 ring-blue-600 ";
+                }
+
+                btn.className = baseClass;
+            }
+
+            document.getElementById('count-answered').textContent = answeredCount;
+            document.getElementById('count-doubt').textContent = doubtCount;
+        }
+
+        // ================= KONFIRMASI & PENYELESAIAN UJIAN =================
+        function openConfirmFinishModal() {
+            const answeredCount = userAnswers.filter(a => a !== null).length;
+            const unansweredCount = 30 - answeredCount;
+            const doubtCount = userDoubts.filter(d => d).length;
+
+            let msg = `Anda telah menjawab <strong>${answeredCount} dari 30 soal</strong>.`;
+            if (unansweredCount > 0) {
+                msg += `<br><span class="text-red-600 font-semibold">Perhatian: Masih ada ${unansweredCount} soal yang belum dijawab!</span>`;
+            }
+            if (doubtCount > 0) {
+                msg += `<br><span class="text-amber-600 font-semibold">Terdapat ${doubtCount} soal yang masih ditandai ragu-ragu.</span>`;
+            }
+            msg += `<br><br>Apakah Anda yakin ingin mengakhiri ujian dan melihat hasil nilai?`;
+
+            document.getElementById('confirm-summary-text').innerHTML = msg;
+            document.getElementById('modal-confirm').classList.remove('hidden');
+        }
+
+        function closeConfirmFinishModal() {
+            document.getElementById('modal-confirm').classList.add('hidden');
+        }
+
+        function closeTimeoutModal() {
+            document.getElementById('modal-timeout').classList.add('hidden');
+            showResultScreen();
+        }
+
+        function finishExam(isTimeout) {
+            if (isExamFinished) return;
+            isExamFinished = true;
+            clearInterval(timerInterval);
+            closeConfirmFinishModal();
+
+            const now = new Date();
+            studentData.endTimeObj = now;
+            studentData.endTimeStr = formatDateTimeID(now);
+
+            calculateResults();
+
+            if (isTimeout) {
+                document.getElementById('modal-timeout').classList.remove('hidden');
+            } else {
+                showResultScreen();
+            }
+        }
+
+        function calculateResults() {
+            let correctCount = 0;
+            const letters = ['A', 'B', 'C', 'D'];
+            const details = [];
+
+            examQuestions.forEach((q, idx) => {
+                const userChoiceIdx = userAnswers[idx];
+                const isCorrect = (userChoiceIdx === q.correctIndex);
+                if (isCorrect) correctCount++;
+
+                details.push({
+                    nomor: idx + 1,
+                    bankId: q.bankId,
+                    topik: q.topic,
+                    soal: q.question,
+                    jawabanSiswa: userChoiceIdx !== null ? `${letters[userChoiceIdx]}. ${q.options[userChoiceIdx]}` : "Tidak Dijawab",
+                    kunciJawaban: `${letters[q.correctIndex]}. ${q.options[q.correctIndex]}`,
+                    status: isCorrect ? "BENAR" : "SALAH",
+                    pembahasan: q.explanation
+                });
+            });
+
+            const wrongCount = 30 - correctCount;
+            // Skor skala 0 - 100 (dibulatkan 2 desimal jika tidak bulat)
+            const rawScore = (correctCount / 30) * 100;
+            const finalScore = Number.isInteger(rawScore) ? rawScore : parseFloat(rawScore.toFixed(2));
+            const isPassed = finalScore >= 80; // KKTP = 80
+
+            lastEvaluationResult = {
+                sekolah: "SMP NEGERI 2 NGADIREJO",
+                mataPelajaran: "Informatika",
+                kelasTingkat: "IX",
+                materi: "Jaringan Komputer dan Internet",
+                guru: "Budi Winarno, S.Kom.",
+                kktp: 80,
+                siswa: {
+                    nama: studentData.nama,
+                    kelas: studentData.kelas,
+                    absen: studentData.absen
+                },
+                waktu: {
+                    mulai: studentData.startTimeStr,
+                    selesai: studentData.endTimeStr
+                },
+                hasil: {
+                    jumlahSoal: 30,
+                    benar: correctCount,
+                    salah: wrongCount,
+                    nilaiAkhir: finalScore,
+                    statusKKTP: isPassed ? "TUNTAS (MENCAPAI KKTP)" : "BELUM TUNTAS (PERLU REMIDIAL)"
+                },
+                rincianJawaban: details
+            };
+        }
+
+        function showResultScreen() {
+            document.getElementById('screen-exam').classList.add('hidden');
+            document.getElementById('screen-result').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            const res = lastEvaluationResult;
+
+            // Isi biodata
+            document.getElementById('res-nama').textContent = res.siswa.nama;
+            document.getElementById('res-kelas-absen').textContent = `${res.siswa.kelas} / No. Absen ${res.siswa.absen}`;
+            document.getElementById('res-start-time').textContent = res.waktu.mulai;
+            document.getElementById('res-end-time').textContent = res.waktu.selesai;
+
+            // Tanggal tanda tangan
+            const dateOnly = studentData.endTimeObj.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+            document.getElementById('res-sign-date').textContent = `Ngadirejo, ${dateOnly}`;
+
+            // Isi skor & status KKTP
+            document.getElementById('res-correct').textContent = res.hasil.benar;
+            document.getElementById('res-wrong').textContent = res.hasil.salah;
+            document.getElementById('res-score').textContent = res.hasil.nilaiAkhir;
+
+            const statusBox = document.getElementById('res-status-box');
+            const statusText = document.getElementById('res-status-text');
+            if (res.hasil.nilaiAkhir >= 80) {
+                statusBox.className = "bg-emerald-50 border border-emerald-300 p-4 rounded-xl flex flex-col justify-center items-center";
+                statusText.className = "text-xs sm:text-sm font-extrabold px-3 py-1 rounded-lg bg-emerald-600 text-white text-center";
+                statusText.textContent = "TUNTAS (KKTP ≥ 80)";
+            } else {
+                statusBox.className = "bg-red-50 border border-red-300 p-4 rounded-xl flex flex-col justify-center items-center";
+                statusText.className = "text-xs sm:text-sm font-extrabold px-3 py-1 rounded-lg bg-red-600 text-white text-center";
+                statusText.textContent = "BELUM TUNTAS (REMIDIAL)";
+            }
+
+            // Render rincian pembahasan 30 soal
+            const reviewList = document.getElementById('review-list');
+            reviewList.innerHTML = '';
+
+            res.rincianJawaban.forEach(item => {
+                const isBenar = item.status === "BENAR";
+                const card = document.createElement('div');
+                card.className = `p-4 rounded-xl border avoid-break ${isBenar ? 'border-emerald-200 bg-emerald-50/30' : 'border-red-200 bg-red-50/30'}`;
+                
+                card.innerHTML = `
+                    <div class="flex flex-wrap justify-between items-center gap-2 mb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-sm text-slate-800">No. ${item.nomor}</span>
+                            <span class="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-medium">${item.topik}</span>
+                        </div>
+                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-full ${isBenar ? 'bg-emerald-600 text-white' : 'bg-red-600 text-white'}">
+                            ${item.status}
+                        </span>
+                    </div>
+                    <p class="text-sm text-slate-800 mb-3 leading-relaxed">${item.soal.replace(/\n/g, '<br>')}</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mb-2.5">
+                        <div class="p-2.5 rounded-lg bg-white border ${isBenar ? 'border-emerald-300' : 'border-red-300'}">
+                            <span class="text-slate-500 block mb-0.5">Jawaban Anda:</span>
+                            <strong class="${isBenar ? 'text-emerald-700' : 'text-red-700'}">${item.jawabanSiswa}</strong>
+                        </div>
+                        <div class="p-2.5 rounded-lg bg-white border border-emerald-300">
+                            <span class="text-slate-500 block mb-0.5">Kunci Jawaban Benar:</span>
+                            <strong class="text-emerald-800">${item.kunciJawaban}</strong>
+                        </div>
+                    </div>
+                    <div class="text-xs text-slate-700 bg-blue-50/80 border border-blue-200 p-2.5 rounded-lg">
+                        <strong class="text-blue-900">Pembahasan:</strong> ${item.pembahasan}
+                    </div>
+                `;
+                reviewList.appendChild(card);
+            });
+        }
+
+        function toggleReviewSection() {
+            const list = document.getElementById('review-list');
+            const btn = document.getElementById('btn-toggle-review');
+            if (list.classList.contains('hidden')) {
+                list.classList.remove('hidden');
+                btn.textContent = "Sembunyikan Rincian";
+            } else {
+                list.classList.add('hidden');
+                btn.textContent = "Tampilkan Rincian";
+            }
+        }
+
+        // ================= EKSPOR REKAP CSV & JSON =================
+        function exportCSV() {
+            if (!lastEvaluationResult) return;
+            const r = lastEvaluationResult;
+            
+            // Header & baris ringkasan CSV (menggunakan titik koma agar rapi di Excel Indonesia)
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Sekolah;Mata Pelajaran;Guru Pengampu;Nama Siswa;Kelas;No Absen;Waktu Mulai;Waktu Selesai;Benar;Salah;Nilai Akhir;KKTP;Status\n";
+            csvContent += `"${r.sekolah}";"${r.mataPelajaran}";"${r.guru}";"${r.siswa.nama}";"${r.siswa.kelas}";"${r.siswa.absen}";"${r.waktu.mulai}";"${r.waktu.selesai}";${r.hasil.benar};${r.hasil.salah};${r.hasil.nilaiAkhir};${r.kktp};"${r.hasil.statusKKTP}"\n\n`;
+            
+            csvContent += "No Soal;ID Bank Soal;Topik;Status;Jawaban Siswa;Kunci Jawaban\n";
+            r.rincianJawaban.forEach(item => {
+                const jSiswa = item.jawabanSiswa.replace(/"/g, '""');
+                const kJawaban = item.kunciJawaban.replace(/"/g, '""');
+                csvContent += `${item.nomor};${item.bankId};"${item.topik}";"${item.status}";"${jSiswa}";"${kJawaban}"\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            const safeName = r.siswa.nama.replace(/[^a-zA-Z0-9]/g, '_');
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `Hasil_CBT_Informatika_${r.siswa.kelas}_${safeName}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function exportJSON() {
+            if (!lastEvaluationResult) return;
+            const r = lastEvaluationResult;
+            const jsonStr = JSON.stringify(r, null, 2);
+            const blob = new Blob([jsonStr], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement("a");
+            const safeName = r.siswa.nama.replace(/[^a-zA-Z0-9]/g, '_');
+            link.href = url;
+            link.download = `Hasil_CBT_Informatika_${r.siswa.kelas}_${safeName}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
